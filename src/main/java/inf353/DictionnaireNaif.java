@@ -1,4 +1,4 @@
-
+package inf353;
 public class DictionnaireNaif implements Dictionnaire{
     char[] d ;
     int i= 0;

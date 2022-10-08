@@ -2,7 +2,7 @@
 
 
 
-## Semaine du 05/12
+## Semaine du 05/10
 
 ### Objectifs de la semaine et répartition
 
@@ -32,10 +32,6 @@ Nous n’avons pas pu avoir une classe DictionnaireNaif fonctionnel , et nous n�
 
 Mieux cerner le problème , et définir une spécification exacte du constructeur et des méthodes , pour éviter de partir sur une mauvaise base , et de perdre du temps .
 
-### faits marquants
-
-Le lien ci dessus donne accès à une "cheat sheet", une anti-sèche du format MarkDown.
-
 -------
 
-Bon projet logiciel
+

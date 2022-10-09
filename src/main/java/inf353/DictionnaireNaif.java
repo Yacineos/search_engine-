@@ -9,7 +9,11 @@ public class DictionnaireNaif implements Dictionnaire{
     }
 
     public void vider(){
-
+        int i = 0 ; 
+        while(i!=d.length){
+            d[i]= 0;
+        }
+        
     }
     public void ajouterMot(String m){
 
@@ -37,12 +41,12 @@ public class DictionnaireNaif implements Dictionnaire{
         return -1 ;
 
     }
-
+    //andy fais ça
     public String motIndice(int i){
         return "";
     }
     public boolean contient(String m){
-        return true;
+        return (indiceMot(m) != -1);
     }
     public int nbMots(){
         return 0;

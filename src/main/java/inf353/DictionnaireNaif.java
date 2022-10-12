@@ -49,7 +49,16 @@ public class DictionnaireNaif implements Dictionnaire{
         return (indiceMot(m) != -1);
     }
     public int nbMots(){
-        return 0;
+        int nb = 0;
+        int pas = 0;
+           while(pas != d.length){
+               if(d[pas] != 0){
+                   nb++;
+                }
+                pas = pas+40;
+           }
+           return nb;
+        
     }
     public boolean contientPrefixe(String p){
         return false;

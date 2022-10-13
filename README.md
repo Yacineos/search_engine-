@@ -44,7 +44,7 @@ Réflexion :
 * Yacine a organisé un meeting sur discord afin que nous installons tous git sur nos PC, et que nous commençons à le manipuler chez nous.
 * De plus nous avons enfin trouvé la bonne représentation du tableau :
 
-![0CF35F8D-173C-4C00-A2DE-9289F1C47B9D.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9cafd41c-5c4c-4b60-a289-2cacda9d52ae/0CF35F8D-173C-4C00-A2DE-9289F1C47B9D.png)
+https://drive.google.com/file/d/1biegN79pR9d3GdPkiIIpQSiBzhw9AGNO/view?usp=sharing
 
 L’exemple est fait avec 10 caractères pour un mot mais dans le projet on a 40 caractères . Nous avons aussi, pendant ce meeting, réalisé la méthode IndiceMot() mais on s’est rendu compte après quelle était pas fonctionnelle .
 

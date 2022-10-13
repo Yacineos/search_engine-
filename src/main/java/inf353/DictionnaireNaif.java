@@ -76,7 +76,7 @@ public class DictionnaireNaif implements Dictionnaire{
             if (d[pas]!=0){
                 nb++;
             }
-            pas=pas+40;
+            pas=pas+4;
         }
         return nb;
     }

@@ -12,8 +12,18 @@ public class Main{
         dictionnaire.d[9] = 't';
         dictionnaire.d[12] = ' ';
         
+        dictionnaire.d[7] = 0;
+        dictionnaire.d[8] = ' ';
+        dictionnaire.d[9] = 0 ;
+        dictionnaire.d[10] = 0 ;
+        dictionnaire.d[11] = 0 ;
+        dictionnaire.d[12] = 0 ;
 
-        System.out.println(dictionnaire.indiceMot("es"));    
+
+        //dictionnaire.d[10] = 'g';
+        //dictionnaire.d[11] = 0;
+
+        System.out.println(dictionnaire.("ebas"));    
 
     }
 }

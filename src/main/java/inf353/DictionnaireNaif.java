@@ -16,8 +16,29 @@ public class DictionnaireNaif implements Dictionnaire{
         
     }
     public void ajouterMot(String m){
+                int i=0 ;
+            if(m.length()<4){
+                 if(!contient(m)){
+                   while(i< d.length  && d[i]!=0) {
+                        i= i+4 ;  
+                          }
+                    if(i< d.length ) {
+                       d[n]=m.charAt(i) ; 
+                        i++;
+                        n++;  
+                       
+                     }
 
-    }
+                }
+                     
+            }
+             
+
+            
+         }
+        
+     
+                // d.add(m);
     public int indiceMot(String m){
         int i = 0;
         int j = 0;
@@ -26,7 +47,7 @@ public class DictionnaireNaif implements Dictionnaire{
         while(d.length != i && m.length() > 0){
             if(d[i] != m.charAt(j) && j!=m.length() ){
                 i = i + Pas;
-            }else{
+             }else{
                 i++;
                 j++;
                 Pas--;

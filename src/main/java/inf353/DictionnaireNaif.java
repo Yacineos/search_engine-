@@ -64,7 +64,38 @@ public class DictionnaireNaif implements Dictionnaire{
     }
     //andy fais ça
     public String motIndice(int i){
-        return "";
+        String motStock = "";
+        String msgErreur = "String out of bound";
+        int compteur = 0;
+        int occ = 0;
+
+        if(i>=0 && i < n){
+            if(i < nbMots()){
+                while(compteur != d.length && occ!=i){
+                    compteur++;
+                    if(d[compteur] == 0){
+                        occ++;
+                        while(d[compteur] ==0){
+                            compteur++;
+                        }
+                    }
+
+                }
+
+
+                while(d[compteur] != 0){
+                    motStock = motStock + d[compteur];
+                    compteur++;
+                }
+                return motStock;
+            }
+            else{
+                return msgErreur;
+            }
+        } 
+        else{
+            return msgErreur;
+        }
     }
     public boolean contient(String m){
         return (indiceMot(m) != -1);

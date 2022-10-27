@@ -4,10 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.*; 
 
 public class MatriceIndexNaive implements MatriceIndex{
-
+    public int ndoc;
+    public int nterm;
     int[][] matrice;
 
     public MatriceIndexNaive(int ndoc, int nterm){
+        this.ndoc = ndoc ;
+        this.nterm =nterm ;
         matrice = new int[ndoc][nterm];
         int i = 0;
         while(i != ndoc){ //matrice.length
@@ -26,15 +29,22 @@ public class MatriceIndexNaive implements MatriceIndex{
         // TODO Auto-generated method stub
         File file = new File("matrice.txt");
         try(BufferedWriter fw = new BufferedWriter(new FileWriter(file))) {
-            int i =0;
-            while(i != matrice.length){
+            
+            fw.write("Nombres de lignes : "+ ndoc);
+            fw.newLine();
+            fw.write("Nombres de colonnes : "+ nterm);
+            fw.newLine();
+            fw.newLine();
+
+            while(i != ndoc){
                 int j = 0;
-                while(j != matrice[i].length){
-                    fw.write(""+matrice[i][j]);  
+                while(j != nterm){
+                    fw.write(""+matrice[i][j]);
+                    fw.newLine();  
                     j++;
                 }
-                fw.append(';');
-                //fw.newline();
+                //fw.append(';');
+            
                 i++;
                 
             }

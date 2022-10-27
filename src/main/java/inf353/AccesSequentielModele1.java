@@ -25,6 +25,6 @@ public interface AccesSequentielModele1<T> {
      * renvoie l'élément courant
      * @return
      */
-    public T elementCourant();
+    public String elementCourant();
 
 }

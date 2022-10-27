@@ -168,7 +168,7 @@ public class LecteurDossierNaif {
         tousLesDocs(f);
 
         //crée le fichier de nom "nomFichier.txt", s'il n'existe pas, où l'on va sauver le dictionnaire des documents
-        File sauver = new File(nomDeFichier + ".txt");
+        File sauver = new File("./" + nomDeFichier + ".txt");
         int d =0;
         if (!sauver.exists()) {
             sauver.createNewFile();
@@ -202,7 +202,7 @@ public class LecteurDossierNaif {
         tousLesTermes();
         
         //crée le fichier de nom "nomFichier.txt", s'il n'existe pas, où l'on va sauver le dictionnaire des termes
-        File sauver = new File(nomDeFichier + ".txt");
+        File sauver = new File("./" + nomDeFichier + ".txt");
         if (!sauver.exists()) {
             int t =0;
             sauver.createNewFile();

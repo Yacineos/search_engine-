@@ -41,7 +41,7 @@ public class Recherche {
         //---------------------------Lecture du nombre de colonnes et de lignes ---------------------
         // initialisé un buffer reader qui va faire office de lecteur de ligne
         br = new BufferedReader(new FileReader("B:\\myfile.txt"));
-        // lire la première ligne et la save dans le une string
+        // lire la première ligne et la save dans une string
         String NumSousFormeDeString = br.readLine();
         // si c'est pas la fin du fichier ( il est vide )
         if(NumSousFormeDeString != null)
@@ -68,7 +68,7 @@ public class Recherche {
             while (i!=nbDoc) {
                 j=0;
                 while(j!=nbTerm){
-                    M.affecte(nbDoc,nbTerm)=Integer.parseInt(contentLine);
+                    M.affecte(i,j,Integer.parseInt(contentLine));
                     j++;
                     contentLine = br.readLine();
                 }
@@ -78,7 +78,7 @@ public class Recherche {
     }
 
     public void lecteurRequete() throws IOException {
-        requeteLus= Files.readString(Path.of("D:\\test"));
+        requeteLus= Files.readString(Path.of("./test"));
 
     }
     public boolean contient(char c){

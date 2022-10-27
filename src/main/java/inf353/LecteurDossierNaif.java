@@ -24,11 +24,8 @@ public class LecteurDossierNaif {
     public DictionnaireNaif dicD;
     public DictionnaireNaif dicT;
     public int nbDTotal=0;
-<<<<<<< HEAD
     public int nbMTotal=0;
 
-=======
->>>>>>> 24610693aa0cc3dc68d97a5482fcdc7a3cee8536
 
 
 
@@ -36,7 +33,6 @@ public class LecteurDossierNaif {
     //constructeur qui prend en paramètre le chemin du dossier
     public LecteurDossierNaif(String pathD) throws java.io.IOException {
         f = new File(pathD);
-<<<<<<< HEAD
         tousLesMots(f); //modifie l'attribut texte, qui contiendra tout les mots.
         nbDocsTotal(f); //modifie l'attribut nbDTotal
         nbMotsTotal(); //modifie l'attribut nbDTotal
@@ -44,16 +40,6 @@ public class LecteurDossierNaif {
         //création des deux dictionnaires
         dicD = new DictionnaireNaif(nbDTotal); 
         dicT = new DictionnaireNaif(nbMTotal);
-=======
-        tousLesTextes(f); //modifie l'attribut texte, qui contiendra tout les mots.
-        nbDocsTotal(f); //modifie l'attribut nbDTotal
-
-        //création des deux dictionnaires
-        dicD = new DictionnaireNaif(nbDTotal); 
-        dicT = new DictionnaireNaif(nbMotsTotal());
-
-        //System.out.println(texte);
->>>>>>> 24610693aa0cc3dc68d97a5482fcdc7a3cee8536
     }
 
 
@@ -69,11 +55,7 @@ public class LecteurDossierNaif {
 
     /**
      * Passage à l'élément suivant
-<<<<<<< HEAD
      */ 
-=======
-     */
->>>>>>> 24610693aa0cc3dc68d97a5482fcdc7a3cee8536
     public void avancer() {
         eCourant = "";
         if (i == texte.length() ){
@@ -114,11 +96,7 @@ public class LecteurDossierNaif {
 
 
     /*
-<<<<<<< HEAD
      * Cette méthode modifie l'attribut nbDTotal
-=======
-     * Cette méthode modifie l'attribut nbDTotal++;
->>>>>>> 24610693aa0cc3dc68d97a5482fcdc7a3cee8536
      */
     private void nbDocsTotal(final File folder) throws java.io.IOException{
         for (final File fileEntry : folder.listFiles()) {
@@ -132,23 +110,14 @@ public class LecteurDossierNaif {
     }
 
     /*
-<<<<<<< HEAD
      * Cette méthode modifie l'attribut nbMTotal
      */
     public void nbMotsTotal(){
         int j = 0;
-=======
-     * Cette méthode renvoie le nombre de mots total contenue dans le dossier f
-     */
-    public int nbMotsTotal(){
-        int j = 0;
-        int nb= 0;
->>>>>>> 24610693aa0cc3dc68d97a5482fcdc7a3cee8536
         while(j != texte.length()){
             while(j != texte.length() && separateurMot(texte.charAt(j))){
                 j++;
             }
-<<<<<<< HEAD
             if (j != texte.length()){
                 nbMTotal++;
                 while(j != texte.length() && !separateurMot(texte.charAt(j))){
@@ -156,30 +125,15 @@ public class LecteurDossierNaif {
                 }
             }
         }
-=======
-            nb++;
-            while(j != texte.length() && !separateurMot(texte.charAt(j))){
-                j++;
-            }
-        }
-        return nb;
->>>>>>> 24610693aa0cc3dc68d97a5482fcdc7a3cee8536
     }
     
     /*
      * Cette méthode modifie l'attribut texte en stockant tous les mots dedans
      */
-<<<<<<< HEAD
     private void tousLesMots(final File folder) throws java.io.IOException {
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
                 tousLesMots(fileEntry);
-=======
-    private void tousLesTextes(final File folder) throws java.io.IOException {
-        for (final File fileEntry : folder.listFiles()) {
-            if (fileEntry.isDirectory()) {
-                tousLesTextes(fileEntry);
->>>>>>> 24610693aa0cc3dc68d97a5482fcdc7a3cee8536
             } else {
                 if(fileEntry.getName()!=".DS_Store"){
                     BufferedReader br = new BufferedReader(new FileReader(fileEntry));
@@ -202,7 +156,7 @@ public class LecteurDossierNaif {
             if (fileEntry.isDirectory()) {
                 tousLesDocs(fileEntry);
             } else {
-                if(fileEntry.getName()!=".DS_Store"){
+                if(!fileEntry.getName().equals(".DS_Store")){
                     dicD.ajouterMot(fileEntry.getName());
                 }
             }
@@ -265,8 +219,4 @@ public class LecteurDossierNaif {
         }
     }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 24610693aa0cc3dc68d97a5482fcdc7a3cee8536

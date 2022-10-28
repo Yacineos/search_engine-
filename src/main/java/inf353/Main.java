@@ -23,7 +23,7 @@ public class Main{
         //dictionnaire.d[10] = 'g';
         //dictionnaire.d[11] = 0;
 
-        System.out.println(dictionnaire.("ebas"));    
+        System.out.println(dictionnaire.d[1]);    
 
     }
 }

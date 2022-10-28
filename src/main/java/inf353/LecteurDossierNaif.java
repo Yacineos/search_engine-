@@ -29,7 +29,6 @@ public class LecteurDossierNaif {
 
 
 
-
     //constructeur qui prend en paramètre le chemin du dossier
     public LecteurDossierNaif(String pathD) throws java.io.IOException {
         f = new File(pathD);
@@ -85,15 +84,13 @@ public class LecteurDossierNaif {
     public String elementCourant(){
         return eCourant;
     }
-
     /**
      * vrai si le caractère c est un séparateur de mot
      * 
      */
     private boolean separateurMot(char c){
-       return (c < 48 || (c > 57 && c < 65) || (c > 90 && c < 97) || c > 122);
+       return (c < 48 || (c > 57 && c < 65) || (c > 90 && c < 97) || (c > 122 && c < 128) || (c > 154 && c<160) || (c>165 && c< 181) || (c > 183 && c<198) || (c > 199 && c<208) || c >216 );
     }
-
 
     /*
      * Cette méthode modifie l'attribut nbDTotal
@@ -174,6 +171,8 @@ public class LecteurDossierNaif {
             sauver.createNewFile();
             FileWriter fw = new FileWriter(sauver.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(""+ dicD.nbMots());
+            bw.newLine();
             while(d != dicD.nbMots()){
                 bw.write(dicD.motIndice(d));
                 bw.newLine();
@@ -208,6 +207,8 @@ public class LecteurDossierNaif {
             sauver.createNewFile();
             FileWriter fw = new FileWriter(sauver.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(""+ dicT.nbMots());
+            bw.newLine();
             while(t != dicT.nbMots()){
                 bw.write(dicT.motIndice(t));
                 bw.newLine();

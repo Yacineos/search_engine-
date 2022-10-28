@@ -30,9 +30,9 @@ public class MatriceIndexNaive implements MatriceIndex{
         File file = new File("matrice.txt");
         try(BufferedWriter fw = new BufferedWriter(new FileWriter(file))) {
             
-            fw.write("Nombres de lignes : "+ ndoc);
+            fw.write(""+ndoc);
             fw.newLine();
-            fw.write("Nombres de colonnes : "+ nterm);
+            fw.write(""+ nterm);
             fw.newLine();
             fw.newLine();
 

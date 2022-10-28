@@ -3,6 +3,7 @@ package inf353;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -14,30 +15,13 @@ public class Recherche {
     private int nbTerm=0;
 
     private String requeteLus=""; // sera utilisé pour lire le fichier qui contient la requête
-
+    DictionnaireNaif requeteDict ;
     // le tableau qui contient les chars spéciaux
-    private char[] charAccepte = new char[16];
+    public static char[] charAccepte = new char[16];
 
 
     public Recherche() throws IOException {
-        // ---------------------------remplissage du tableau des chars spéciaux -----------------------
-        charAccepte[0]='à';
-        charAccepte[1]='â';
-        charAccepte[2]='ä';
-        charAccepte[3]='é';
-        charAccepte[4]='è';
-        charAccepte[5]='ê';
-        charAccepte[6]='ë';
-        charAccepte[7]='î';
-        charAccepte[8]='ï';
-        charAccepte[9]='ô';
-        charAccepte[10]='ö';
-        charAccepte[11]='ù';
-        charAccepte[12]='û';
-        charAccepte[13]='ü';
-        charAccepte[14]='ÿ';
-        charAccepte[15]='ç';
-
+/*
         //---------------------------Lecture du nombre de colonnes et de lignes ---------------------
         // initialisé un buffer reader qui va faire office de lecteur de ligne
         br = new BufferedReader(new FileReader("B:\\myfile.txt"));
@@ -51,6 +35,7 @@ public class Recherche {
         // si le fichier contient cette deuxième ligne et ce n'est pas un fichier à une seul ligne
         if(NumSousFormeDeString != null)
         nbTerm =Integer.parseInt(br.readLine());// on fait de même avec nb ligne
+   */
     }
 
     void lectureMatrice() throws IOException {
@@ -78,22 +63,25 @@ public class Recherche {
     }
 
     public void lecteurRequete() throws IOException {
-        requeteLus= Files.readString(Path.of("./test"));
-
-    }
-    public boolean contient(char c){
-        int i = 0 ;
-
-        while(i!=charAccepte.length){
-
-            if(c == charAccepte[i])
-
-                return true ;
-
-            i++;
+        /*
+        requeteLus= Files.readString(Path.of(".\\text.txt"));
+        String motLus="";
+        requeteDict = new DictionnaireNaif(1000);
+        int i = 0;
+        while(i!=requeteLus.length()){
+            if( charAccepte(requeteLus.codePointAt(i))){
+                //   le char lu est un chiffre ( 0-9)                                  le char lu appartient à (A-Z)                                         le char lu appartient à ( a - z )                              le char lu est l'un des caractère spéciaux du tableau qu'on a crée
+                motLus=motLus+requeteLus.charAt(i);
+            }else{
+                requeteDict.ajouterMot(motLus);
+                motLus="";
+            }
 
         }
-
-        return false ;
+    */
+    }
+    public static boolean charAccepte(int c) {
+        return ( c>47 && c<58)||( c>64 && c<91 ) || ( c>96 && c<123 ) || (c>191 && c<256);
     }
 }
+

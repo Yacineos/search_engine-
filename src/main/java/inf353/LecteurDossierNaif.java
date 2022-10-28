@@ -29,6 +29,7 @@ public class LecteurDossierNaif {
 
 
 
+
     //constructeur qui prend en paramètre le chemin du dossier
     public LecteurDossierNaif(String pathD) throws java.io.IOException {
         f = new File(pathD);
@@ -46,7 +47,7 @@ public class LecteurDossierNaif {
      * Initialisation du parcours.
      */
     public void demarrer() {
-        while( i != texte.length()  && separateurMot(texte.charAt(i))){
+        while( i != texte.length()  && !charAccepte(texte.charAt(i))){
             i++;
         }
         avancer();
@@ -60,11 +61,11 @@ public class LecteurDossierNaif {
         if (i == texte.length() ){
             fds = true;
         }
-        while(i != texte.length() && !separateurMot(texte.charAt(i))){
+        while(i != texte.length() && charAccepte(texte.charAt(i))){
             eCourant = eCourant + texte.charAt(i);
             i++;
         }
-        while(i != texte.length() && separateurMot(texte.charAt(i))){
+        while(i != texte.length() && !charAccepte(texte.charAt(i))){
             i++;
         }
     }
@@ -84,13 +85,11 @@ public class LecteurDossierNaif {
     public String elementCourant(){
         return eCourant;
     }
-    /**
-     * vrai si le caractère c est un séparateur de mot
-     * 
-     */
-    private boolean separateurMot(char c){
-       return (c < 48 || (c > 57 && c < 65) || (c > 90 && c < 97) || (c > 122 && c < 128) || (c > 154 && c<160) || (c>165 && c< 181) || (c > 183 && c<198) || (c > 199 && c<208) || c >216 );
+
+    public static boolean charAccepte(char c) {
+        return ( c>47 && c<58)||( c>64 && c<91 ) || ( c>96 && c<123 ) || (c>191 && c<256);
     }
+
 
     /*
      * Cette méthode modifie l'attribut nbDTotal
@@ -112,12 +111,12 @@ public class LecteurDossierNaif {
     public void nbMotsTotal(){
         int j = 0;
         while(j != texte.length()){
-            while(j != texte.length() && separateurMot(texte.charAt(j))){
+            while(j != texte.length() && !charAccepte(texte.charAt(j))){
                 j++;
             }
             if (j != texte.length()){
                 nbMTotal++;
-                while(j != texte.length() && !separateurMot(texte.charAt(j))){
+                while(j != texte.length() && charAccepte(texte.charAt(j))){
                     j++;
                 }
             }
@@ -171,7 +170,7 @@ public class LecteurDossierNaif {
             sauver.createNewFile();
             FileWriter fw = new FileWriter(sauver.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(""+ dicD.nbMots());
+            bw.write(""+dicD.nbMots());
             bw.newLine();
             while(d != dicD.nbMots()){
                 bw.write(dicD.motIndice(d));
@@ -207,8 +206,8 @@ public class LecteurDossierNaif {
             sauver.createNewFile();
             FileWriter fw = new FileWriter(sauver.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(""+ dicT.nbMots());
-            bw.newLine();
+            bw.write(""+dicT.nbMots());
+                bw.newLine();
             while(t != dicT.nbMots()){
                 bw.write(dicT.motIndice(t));
                 bw.newLine();

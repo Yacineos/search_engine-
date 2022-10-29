@@ -35,11 +35,12 @@ public class LecteurDossierNaif {
         f = new File(pathD);
         tousLesMots(f); //modifie l'attribut texte, qui contiendra tout les mots.
         nbDocsTotal(f); //modifie l'attribut nbDTotal
-        nbMotsTotal(); //modifie l'attribut nbDTotal
+        nbMotsTotal(); //modifie l'attribut nbMTotal
 
         //création des deux dictionnaires
         dicD = new DictionnaireNaif(nbDTotal); 
         dicT = new DictionnaireNaif(nbMTotal);
+
     }
 
 
@@ -131,7 +132,7 @@ public class LecteurDossierNaif {
             if (fileEntry.isDirectory()) {
                 tousLesMots(fileEntry);
             } else {
-                if(fileEntry.getName()!=".DS_Store"){
+                if(!fileEntry.getName().equals(".DS_Store")){
                     BufferedReader br = new BufferedReader(new FileReader(fileEntry));
                     String ligne;
                     //on stock tout les mots de tous les fichiers dans texte
@@ -164,7 +165,7 @@ public class LecteurDossierNaif {
         tousLesDocs(f);
 
         //crée le fichier de nom "nomFichier.txt", s'il n'existe pas, où l'on va sauver le dictionnaire des documents
-        File sauver = new File("./" + nomDeFichier + ".txt");
+        File sauver = new File("../resources/" + nomDeFichier + ".txt");
         int d =0;
         if (!sauver.exists()) {
             sauver.createNewFile();
@@ -200,14 +201,14 @@ public class LecteurDossierNaif {
         tousLesTermes();
         
         //crée le fichier de nom "nomFichier.txt", s'il n'existe pas, où l'on va sauver le dictionnaire des termes
-        File sauver = new File("./" + nomDeFichier + ".txt");
+        File sauver = new File("../resources/" + nomDeFichier + ".txt");
         if (!sauver.exists()) {
             int t =0;
             sauver.createNewFile();
             FileWriter fw = new FileWriter(sauver.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(""+dicT.nbMots());
-                bw.newLine();
+            bw.newLine();
             while(t != dicT.nbMots()){
                 bw.write(dicT.motIndice(t));
                 bw.newLine();

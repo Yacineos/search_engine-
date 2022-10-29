@@ -29,11 +29,11 @@ public class LecteurDocumentNaif implements AccesSequentielModele1<String> {
    }
    
    
-    /**
+       /**
      * Initialisation du parcours.
      */
     public void demarrer() {
-        while( i != texte.length()  && separateurMot(texte.charAt(i))){
+        while( i != texte.length()  && !charAccepte(texte.charAt(i))){
             i++;
         }
         avancer();
@@ -41,17 +41,17 @@ public class LecteurDocumentNaif implements AccesSequentielModele1<String> {
 
     /**
      * Passage à l'élément suivant
-     */
+     */ 
     public void avancer() {
         eCourant = "";
         if (i == texte.length() ){
             fds = true;
         }
-        while(i != texte.length() && !separateurMot(texte.charAt(i))){
+        while(i != texte.length() && charAccepte(texte.charAt(i))){
             eCourant = eCourant + texte.charAt(i);
             i++;
         }
-        while(i != texte.length() && separateurMot(texte.charAt(i))){
+        while(i != texte.length() && !charAccepte(texte.charAt(i))){
             i++;
         }
     }
@@ -72,12 +72,7 @@ public class LecteurDocumentNaif implements AccesSequentielModele1<String> {
         return eCourant;
     }
 
-    /**
-     * vrai si le caractère c est un séparateur de mot
-     * @return
-     */
-    private boolean separateurMot(char c){
-       return (c < 48 || (c > 57 && c < 65) || (c > 90 && c < 97) || c > 122);
+    public static boolean charAccepte(char c) {
+        return ( c>47 && c<58)||( c>64 && c<91 ) || ( c>96 && c<123 ) || (c>191 && c<256);
     }
-
 }

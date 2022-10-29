@@ -190,6 +190,13 @@ public class DictionnaireNaif implements Dictionnaire{
     public String plusLongPrefixeDe(String mot){
         return "";
     }
+    public void afficher(){
+        int i = 0 ;
+        while(i!=this.nbMots()){
+            System.out.println(motIndice(i));
+            i++;
+        }
+    }
 }
 
 	

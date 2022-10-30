@@ -76,6 +76,8 @@ public class Recherche {
             }
             i++;
         }
+        if(motLus.length()!=0)
+            requeteDict.ajouterMot(motLus);
 
     }
     public static boolean charAccepte(int c) {

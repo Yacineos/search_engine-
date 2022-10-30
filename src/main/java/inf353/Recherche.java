@@ -1,9 +1,7 @@
 package inf353;
 
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
+
 
 public class Recherche {
 
@@ -13,7 +11,8 @@ public class Recherche {
     private int nbDoc=0;
     private int nbTerm=0;
 
-    public DictionnaireNaif requeteDict ;
+    public DictionnaireNaif requeteDict;
+    public DictionnaireNaif lecteurDico ;
     // le tableau qui contient les chars spéciaux
     public static char[] charAccepte = new char[16];
 
@@ -96,6 +95,29 @@ public class Recherche {
 
 
         return fichierSousFormeDeString;
+    }
+
+    public void lecteurDictionnaire() throws IOException{
+
+        String fileName = "termes.txt";
+        lecteurDico = new DictionnaireNaif(nbTerm); // Instanciation du dictionnaire.
+        File f = new File("./src/main/resources"); // Recuperation du fichier termes.
+        br = new BufferedReader(new FileReader(f+"/"+fileName));
+
+        int i = 0; // Compteur
+        contentLine = br.readLine(); // Première ligne
+        nbTerm = Integer.parseInt(contentLine); // Lecture de la première ligne pour récupérer le nombre de termes.
+        //System.out.println("Nb termes : "+nbTerm);
+        contentLine = br.readLine(); // Deuxième Ligne pour commencer à ajouter les termes.
+        //System.out.println("Duexieme Ligne : "+contentLine);
+        while(i != nbTerm){
+            lecteurDico.ajouterMot(contentLine);
+            i++;
+            contentLine = br.readLine();
+            //System.out.println("Ligne actuelle : "+contentLine);
+            //System.out.println("nbIte : "+i);
+        }
+
     }
 }
 

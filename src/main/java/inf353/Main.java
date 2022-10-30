@@ -2,28 +2,38 @@ package inf353;
 
 public class Main{
     public static void main(String[] args) {
-        DictionnaireNaif dictionnaire = new DictionnaireNaif(4);
-        dictionnaire.vider();
-        dictionnaire.d[0] = 'T';
-        dictionnaire.d[1] = 'e';
-        dictionnaire.d[2] = 's';
-        dictionnaire.d[4] = 't';
-        dictionnaire.d[8] = 'e';
-        dictionnaire.d[9] = 't';
-        dictionnaire.d[12] = ' ';
-        
-        dictionnaire.d[7] = 0;
-        dictionnaire.d[8] = ' ';
-        dictionnaire.d[9] = 0 ;
-        dictionnaire.d[10] = 0 ;
-        dictionnaire.d[11] = 0 ;
-        dictionnaire.d[12] = 0 ;
+        DictionnaireNaif dict = new DictionnaireNaif(6);
+        dict.ajouterMot("Angeline");
+        dict.ajouterMot("Basma");
+        dict.ajouterMot("Sara");
+        dict.ajouterMot("Andy");
+        dict.ajouterMot("Yacine");
+        dict.ajouterMot("Messipsa");
+        //dict.ajouterMot("Yacine");
+        dict.ajouterMot("Symbaa");
 
+        System.out.println("Les mots contenu dans le dictionnaire:");
+        dict.afficher();
+        //dict.vider();
+        //dict.afficher();
+        System.out.println("Nombres de mots:");
+        System.out.println(dict.nbMots());
 
-        //dictionnaire.d[10] = 'g';
-        //dictionnaire.d[11] = 0;
+        System.out.println("Le mot d'indice 3");
+        System.out.println(dict.motIndice(3));
+        System.out.println("Le mot d'indice 5");
+        System.out.println(dict.motIndice(5));
+        System.out.println("Le mot d'indice 6");
+        System.out.println(dict.motIndice(6));
 
-        System.out.println(dictionnaire.d[1]);    
+        System.out.println("L'indice du mot Sara");
+        System.out.println(dict.indiceMot("Sara"));
+
+        System.out.println("L'indice du mot Sar");
+        System.out.println(dict.indiceMot("Sar"));
+
+        System.out.println("L'indice du mot Saraa");
+        System.out.println(dict.indiceMot("Saraa"));
 
     }
 }

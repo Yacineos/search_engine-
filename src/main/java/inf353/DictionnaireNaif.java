@@ -13,7 +13,6 @@ public class DictionnaireNaif implements Dictionnaire{
         while(i!=d.length){
             d[i]= 0;
         }
-        
     }
 
     public void ajouterMot(String m){
@@ -38,102 +37,47 @@ public class DictionnaireNaif implements Dictionnaire{
         }
     }
 
-   /* public void ajouterMot(String m){
-                int i=0 ;
-            if(m.length()<40){
-                 if(!contient(m)){
-                   while(i< d.length  && d[i]!=0) {
-                        i= i+40 ;  
-                          }
-                    if(i< d.length ) {
-                       d[n]=m.charAt(i) ; 
-                        i++;
-                        n++;  
-                       
-                     }
-
-                }
-                     
-            }
-             
-
-            
-         }*/
-        
-     
-         public int indiceMot(String m){
-            int i = 0;
-            int pas = 40;
-            String s ="";
-            int indice = 0;
-            
-            while(i!=d.length){
-                 if(d[i] == 0){
-                    i = i+pas;
-                    indice++;
-                 }else{
-                    while(d[i]!=0){
-                        s = s + d[i];
-                        i++;
-                        pas--;
-                    }
-                    if(memeMots(m,s)){
-                       i = d.length;
-                    }else{
-                       i = i + pas;
-                       pas = 40;
-                       s = "";
-                    }
-                    indice++;
-                 }
-            }
-            
-            if(indice >= this.n){
-              return -1;
-            }else{
-              return indice;
-            }
-            
-          }
-          
-          
-          public boolean memeMots(String m, String s){
-              int i =0;
-              if(m.length() == s.length()){
-                while(i!=m.length() && m.charAt(i)==s.charAt(i)){
-                     i++;
-                }
-                return i == m.length();
-              }else{
-                return false;
-              }
-          
-          }
-      
-                // d.add(m);
-    /*public int indiceMot(String m){
+    public int indiceMot(String m){
         int i = 0;
-        int j = 0;
-        int Pas = 4 ;
-        
-        while(d.length != i && m.length() > 0){
-            if(d[i] != m.charAt(j) && j!=m.length() ){
-                i = i + Pas;
-             }else{
-                i++;
-                j++;
-                Pas--;
-                if(j == m.length() && d[i]==0){
-                    return i - m.length();
+        int indice = 0;
+        while(i!=d.length){
+            int pas=40;
+            if(d[i] == 0){
+                i = i+pas;
+                indice++;
+            }else{
+                String s ="";
+                while(d[i]!=0){
+                    s = s + d[i];
+                    i++;
+                    pas--;
                 }
-                
-
+                if(memeMots(m,s)){
+                    i = d.length;
+                }else{
+                    i = i + pas;
+                    indice++;
+                }
             }
-            
         }
-        return -1 ;
+        if(indice >= this.n){
+            return -1;
+        }else{
+            return indice;
+        }    
+    }
 
-    }*/
+    public boolean memeMots(String m, String s){
+        int i =0;
+        if(m.length() == s.length()){
+            while(i!=m.length() && m.charAt(i)==s.charAt(i)){
+                i++;
+            }
+            return i == m.length();
+        }else{
+            return false;
+        }
+    }
 
     //andy fais ça
     public String motIndice(int i){
@@ -170,9 +114,11 @@ public class DictionnaireNaif implements Dictionnaire{
             return msgErreur;
         }
     }
+
     public boolean contient(String m){
         return (indiceMot(m) != -1);
     }
+
     public int nbMots(){
         int nb = 0;
         int pas = 0;
@@ -184,12 +130,15 @@ public class DictionnaireNaif implements Dictionnaire{
         }
         return nb;
     }
+
     public boolean contientPrefixe(String p){
         return false;
     }
+
     public String plusLongPrefixeDe(String mot){
         return "";
     }
+
     public void afficher(){
         int i = 0 ;
         while(i!=this.nbMots()){

@@ -8,7 +8,7 @@ import java.io.*;
  * ainsi que le dictionnaire des termes contenue dans les fichiers de ce dossier.
  */
 
-public class LecteurDossierNaif {
+public class Indexation {
 
     public String texte = "";
     public File dossier;
@@ -21,7 +21,7 @@ public class LecteurDossierNaif {
     public int nbMTotal=0;
 
     //constructeur qui prend en paramètre le chemin du dossier
-    public LecteurDossierNaif(String pathD) throws java.io.IOException {
+    public Indexation(String pathD) throws java.io.IOException {
         dossier = new File(pathD);
 
         //modification de l'attribut texte, qui contiendra tout les mots.

@@ -27,7 +27,7 @@ public class MatriceIndexNaive implements MatriceIndex{
     public void sauver(String nomDeFichier) throws FileNotFoundException {
         int i = 0 ;
         // TODO Auto-generated method stub
-        File file = new File("matrice.txt");
+        File file = new File("../resources/" + nomDeFichier + ".txt");
         try(BufferedWriter fw = new BufferedWriter(new FileWriter(file))) {
             
             fw.write(""+ndoc);

@@ -1,5 +1,8 @@
 package inf353;
-import java.io.*;
+import java.io.File ;
+import java.io.FileReader;
+import java.io.BufferedReader;
+
 /**
  * Classe LecteurDocumentNaif qui implémente un accès séquenciel de modèle 1 d'élemnts de type String.
  * Elle donne accès à un texte contenu dans un fichier, mot par mot.
@@ -21,6 +24,8 @@ public class LecteurDocumentNaif implements AccesSequentielModele1<String> {
     while ((ligne = br.readLine())!=null){
         texte += ligne + " ";
     }
+
+    System.out.println(texte);
    }
    
    

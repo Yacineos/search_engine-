@@ -61,19 +61,22 @@ public class Recherche {
     }
 
     public void lecteurRequete() throws IOException {
-        String requeteLus = lireFichier("./src/main/resources/requete.txt");
+        //String requeteLus = lireFichier("./src/main/resources/requete.txt");
+        File f = new File("./src/main/resources");
         String motLus="";
+        int lus= 0;
+        br = new BufferedReader(new FileReader(f+"/requete.txt"));
         requeteDict = new DictionnaireNaif(1000);
-        int i = 0;
-        while(i!=requeteLus.length()){
-            if( charAccepte(requeteLus.codePointAt(i))){
-                motLus+=requeteLus.charAt(i);
+        lus = br.read();
+        while(lus!=-1){
+            if(charAccepte((char)lus)){
+                motLus+=(char)lus;
             }else{
                 if(motLus.length()!=0)
                 requeteDict.ajouterMot(motLus);
                 motLus="";
             }
-            i++;
+            lus = br.read();
         }
         if(motLus.length()!=0)
             requeteDict.ajouterMot(motLus);

@@ -34,7 +34,6 @@ public class MatriceIndexNaive implements MatriceIndex{
             fw.newLine();
             fw.write(""+ nterm);
             fw.newLine();
-            fw.newLine();
 
             while(i != ndoc){
                 int j = 0;

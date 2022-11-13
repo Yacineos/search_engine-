@@ -8,12 +8,12 @@ public interface AccesSequentielModele1<T> {
     /**
      * Initialisation du parcours.
      */
-    public void demarrer();
+    public void demarrer()throws java.io.IOException ;
 
     /**
      * Passage à l'élément suivant
      */
-    public void avancer();
+    public void avancer() throws java.io.IOException ;
 
     /**
      * vrai ssi la séquence est épuisée

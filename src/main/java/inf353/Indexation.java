@@ -2,145 +2,57 @@ package inf353;
 import java.io.*;
 
 /**
- * Classe LecteurDossierNaif.
- * Elle donne accès à un texte contenu dans tous les fichiers d'un dossier, mot par mot, et permet
- * de sauver dans un fichier txt le dictionnaire des noms des documents contenu dans ce dossier
- * ainsi que le dictionnaire des termes contenue dans les fichiers de ce dossier.
+ * Classe Indexation qui parcours l'ensemble du corpus, crée la matrice index
+ * + les dictionnaires de documents et de termes et les sauve sur le disque.
  */
 
-public class Indexation {
+public class Indexation{
 
-    public String texte = "";
-    public File dossier;
-    public String eCourant;
-    public boolean fds = false;
-    public int i = 0;
     public DictionnaireNaif dicD;
     public DictionnaireNaif dicT;
-    public int nbDTotal=0;
-    public int nbMTotal=0;
+    public MatriceIndexNaive m;
 
-    //constructeur qui prend en paramètre le chemin du dossier
-    public Indexation(String pathD) throws java.io.IOException {
-        dossier = new File(pathD);
+    public int nbDocTotal;
+    public DictionnaireNaif dicDpath;
 
-        //modification de l'attribut texte, qui contiendra tout les mots.
-        stockLesMots(dossier);
+    public Indexation(String path, String nomDeMatrice, String nomDeDocs, String nomDeTermes) throws java.io.IOException {
+        File dossier = new File(path);
 
-        //modification des attributs nbDTotal et nbMTotal
-        nbDocsTotal(dossier); 
-        nbMotsTotal();
+        dicDpath = new DictionnaireNaif(nbDocsTotal(dossier));
+        remplirDicDpath(dossier);
+        dicD = new DictionnaireNaif(nbDocsTotal(dossier));
+        remplirDicD(dossier);
 
-        //création des deux dictionnaires
-        dicD = new DictionnaireNaif(nbDTotal); 
-        dicT = new DictionnaireNaif(nbMTotal);
+        dicT = new DictionnaireNaif(nbMotsTotal());
+        remplirDicT();
 
+        m = new MatriceIndexNaive(dicD.nbMots(),dicT.nbMots());
+        remplirMatrice();
+
+        //sauve les trois fichier dans le disque;
+        sauverDocs(nomDeDocs);
+        sauverTermes(nomDeTermes);
+        m.sauver(nomDeMatrice);
     }
-
-
-    /**
-     * Initialisation du parcours.
-     */
-    public void demarrer() {
-        while( i != texte.length()  && !charAccepte(texte.charAt(i))){
-            i++;
-        }
-        avancer();
-    }
-
-    /**
-     * Passage à l'élément suivant
-     */ 
-    public void avancer() {
-        eCourant = "";
-        if (i == texte.length() ){
-            fds = true;
-        }
-        while(i != texte.length() && charAccepte(texte.charAt(i))){
-            eCourant = eCourant + texte.charAt(i);
-            i++;
-        }
-        while(i != texte.length() && !charAccepte(texte.charAt(i))){
-            i++;
-        }
-    }
-
-    /**
-     * vrai ssi la séquence est épuisée
-     * @return
-     */
-    public boolean finDeSequence(){
-        return fds;
-    }
-
-    /**
-     * renvoie l'élément courant
-     * @return
-     */
-    public String elementCourant(){
-        return eCourant;
-    }
-
-    public static boolean charAccepte(char c) {
-        return ( c>47 && c<58)||( c>64 && c<91 ) || ( c>96 && c<123 ) || (c>191 && c<256);
-    }
-
 
     /*
-     * Cette méthode modifie l'attribut nbDTotal
+     * Remplissage du dictionnaire des chemins des documents: dicDpath
+     * Pour le constructeur LecteurDocumentNaif qui prend en paramètre le chemin d'un document.
      */
-    private void nbDocsTotal(final File folder) throws java.io.IOException{
+    private void remplirDicDpath(final File folder) throws java.io.IOException {
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
-                nbDocsTotal(fileEntry);
-            }else{
-                nbDTotal++;
-            }
-            
-        }
-    }
-
-    /*
-     * Cette méthode modifie l'attribut nbMTotal
-     */
-    public void nbMotsTotal(){
-        int j = 0;
-        while(j != texte.length()){
-            while(j != texte.length() && !charAccepte(texte.charAt(j))){
-                j++;
-            }
-            if (j != texte.length()){
-                nbMTotal++;
-                while(j != texte.length() && charAccepte(texte.charAt(j))){
-                    j++;
-                }
-            }
-        }
-    }
-    
-    /*
-     * Cette méthode modifie l'attribut texte en stockant tous les mots dedans
-     */
-    private void stockLesMots(final File folder) throws java.io.IOException {
-        for (final File fileEntry : folder.listFiles()) {
-            if (fileEntry.isDirectory()) {
-                stockLesMots(fileEntry);
+                remplirDicDpath(fileEntry);
             } else {
                 if(!fileEntry.getName().equals(".DS_Store")){
-                    BufferedReader br = new BufferedReader(new FileReader(fileEntry));
-                    String ligne;
-                    //on stock tout les mots de tous les fichiers dans texte
-                    while ((ligne = br.readLine())!=null){
-                        texte = texte + ligne + " ";
-                    }
+                    dicDpath.ajouterMot(fileEntry.getPath());
                 }
             }
         }
     }
 
-    /**
-     * Cette méthode permet de remplir le tableau de l'attribut dicD
-     * 
+    /*
+     * Remplissage du dictionnaire des noms des documents: dicD.
      */
     private void remplirDicD(final File folder) throws java.io.IOException {
         for (final File fileEntry : folder.listFiles()) {
@@ -154,14 +66,51 @@ public class Indexation {
         }
     }
 
-    public void sauverDocs(String nomDeFichier) throws java.io.IOException, FileNotFoundException{
-        //rempli le dictionnaire dicD de tous les noms de documents du dossier f
-        remplirDicD(dossier);
+    
+    /*
+     * Remplissage du dictionnaire des termes: dicT.
+     */
+    private void remplirDicT() throws java.io.IOException{
+        int i = 0;
+        while (i!=dicD.nbMots()){
+            LecteurDocumentNaif f = new LecteurDocumentNaif(dicDpath.motIndice(i));
+            f.demarrer();
+            while(!f.finDeSequence()){
+                dicT.ajouterMot(f.elementCourant());
+                f.avancer();
+            }
+            i++;
+        }
+    }
 
+    /*
+     * Remplissage de la matrice m.
+     */
+    private void remplirMatrice() throws java.io.IOException{
+        int i = 0;
+        while (i!=dicD.nbMots()){
+            LecteurDocumentNaif f = new LecteurDocumentNaif(dicDpath.motIndice(i));
+            f.demarrer();
+            while(!f.finDeSequence()){
+                m.incremente(i,dicT.indiceMot(f.elementCourant()));
+                f.avancer();
+            }
+            i++;
+        }
+    }
+    
+    /*
+     * sauvegarde du dictionnaire des documents dans le fichier "nomDeFicher.txt"
+     * la 1ère ligne contient le nombre de documents
+     * puis chaque ligne contient un nom de document 
+     */
+    public void sauverDocs(String nomDeFichier) throws java.io.IOException, FileNotFoundException{
         //crée le fichier de nom "nomFichier.txt", s'il n'existe pas, où l'on va sauver le dictionnaire des documents
         File sauver = new File("../resources/" + nomDeFichier + ".txt");
         int d =0;
-        if (!sauver.exists()) {
+        if (sauver.exists()) {
+            sauver.delete();
+        }
             sauver.createNewFile();
             FileWriter fw = new FileWriter(sauver.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
@@ -172,39 +121,22 @@ public class Indexation {
                 d++;
             }
             bw.close();
-        }else{ 
-            System.out.println("ce nom de fichier existe déjà");
-        }
+        //}else{ 
+            //System.out.println("ce nom de fichier existe déjà");
+        //}
     }
 
-    /**
-     * Cette méthode permet de remplir le tableau de l'attribut dicT
-     * 
+    /*
+     * sauvegarde du dictionnaire des termes dans le fichier "nomDeFicher.txt"
+     * la 1ère ligne contient le nombre de termes
+     * puis chaque ligne contient un terme
      */
-    private void remplirDicT(){
-        int t =0;
-        while(t != texte.length()){
-            while(t != texte.length() && !charAccepte(texte.charAt(t))){
-                t++;
-            }
-            if (t != texte.length()){
-                String terme = "";
-                while(t != texte.length() && charAccepte(texte.charAt(t))){
-                    terme = terme + texte.charAt(t);
-                    t++;
-                }
-                dicT.ajouterMot(terme);
-            }
-        }
-    }
-
     public void sauverTermes(String nomDeFichier) throws java.io.IOException, FileNotFoundException{
-        //rempli le dictionnaire dicT de tous les termes du dossier f
-        remplirDicT();
-        
         //crée le fichier de nom "nomFichier.txt", s'il n'existe pas, où l'on va sauver le dictionnaire des termes
         File sauver = new File("../resources/" + nomDeFichier + ".txt");
-        if (!sauver.exists()) {
+        if (sauver.exists()) {
+            sauver.delete();
+        }
             int t =0;
             sauver.createNewFile();
             FileWriter fw = new FileWriter(sauver.getAbsoluteFile());
@@ -216,9 +148,44 @@ public class Indexation {
                 t++;
             }
             bw.close();
-        }else{ 
-            System.out.println("ce nom de fichier existe déjà");
-        }
+        //}else{ 
+            //System.out.println("ce nom de fichier existe déjà");
+        //}
     }
 
+
+    /*
+     * Cette méthode renvoie le nombre de documents
+     * en modifiant l'attribut nbDocTotal
+     */
+    private int nbDocsTotal(final File folder) throws java.io.IOException{
+        for (final File fileEntry : folder.listFiles()) {
+            if (fileEntry.isDirectory()) {
+                nbDocsTotal(fileEntry);
+            }else{
+                if(!fileEntry.getName().equals(".DS_Store")){
+                    nbDocTotal++;
+                }
+            }
+        }
+        return nbDocTotal;
+    }
+
+    /*
+     * Cette méthode renvoie le nombre de mots total
+     */
+    private int nbMotsTotal() throws java.io.IOException{
+        int i =0;
+        int nb =0;
+        while(i != dicDpath.nbMots()){
+            LecteurDocumentNaif f = new LecteurDocumentNaif(dicDpath.motIndice(i));
+            f.demarrer();
+            while(!f.finDeSequence()){
+                nb++;
+                f.avancer();
+            }
+            i++;
+       }
+       return nb;
+    }
 }

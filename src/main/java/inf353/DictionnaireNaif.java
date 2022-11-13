@@ -4,7 +4,7 @@ public class DictionnaireNaif implements Dictionnaire{
     int n = 0;
 
     public DictionnaireNaif(int n){
-        d = new char[n*40];
+        d = new char[n*400];
         this.n = n;
     }
 
@@ -17,8 +17,8 @@ public class DictionnaireNaif implements Dictionnaire{
 
     public void ajouterMot(String m){
         int i = 0;
-        int pas = 40;
-        if(m.length() <40){
+        int pas = 400;
+        if(m.length() <400){
             if(!contient(m)){
                 while(i!= d.length){
                     if(d[i] != 0){
@@ -41,7 +41,7 @@ public class DictionnaireNaif implements Dictionnaire{
         int i = 0;
         int indice = 0;
         while(i!=d.length){
-            int pas=40;
+            int pas=400;
             if(d[i] == 0){
                 i = i+pas;
                 indice++;
@@ -126,7 +126,7 @@ public class DictionnaireNaif implements Dictionnaire{
             if (d[pas]!=0){
                 nb++;
             }
-            pas=pas+40;
+            pas=pas+400;
         }
         return nb;
     }

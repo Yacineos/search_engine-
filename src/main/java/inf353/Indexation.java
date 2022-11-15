@@ -15,6 +15,9 @@ public class Indexation{
     public int nbDocTotal;
     public DictionnaireNaif dicDpath;
 
+    public Indexation(){
+
+    }
     public Indexation(String path, String nomDeMatrice, String nomDeDocs, String nomDeTermes) throws java.io.IOException {
         File dossier = new File(path);
 
@@ -106,11 +109,8 @@ public class Indexation{
      */
     public void sauverDocs(String nomDeFichier) throws java.io.IOException, FileNotFoundException{
         //crée le fichier de nom "nomFichier.txt", s'il n'existe pas, où l'on va sauver le dictionnaire des documents
-        File sauver = new File("../resources/" + nomDeFichier + ".txt");
+        File sauver = new File("./src/main/resources/" + nomDeFichier + ".txt");
         int d =0;
-        if (sauver.exists()) {
-            sauver.delete();
-        }
             sauver.createNewFile();
             FileWriter fw = new FileWriter(sauver.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
@@ -133,7 +133,7 @@ public class Indexation{
      */
     public void sauverTermes(String nomDeFichier) throws java.io.IOException, FileNotFoundException{
         //crée le fichier de nom "nomFichier.txt", s'il n'existe pas, où l'on va sauver le dictionnaire des termes
-        File sauver = new File("../resources/" + nomDeFichier + ".txt");
+        File sauver = new File("./src/main/resources/" + nomDeFichier + ".txt");
         if (sauver.exists()) {
             sauver.delete();
         }

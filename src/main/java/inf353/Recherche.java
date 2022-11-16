@@ -20,18 +20,18 @@ public class Recherche {
 
 
     public Recherche(int N) throws IOException {
-        Indexation i = new Indexation("D:/University/sample","MatriceAdjacence","Documents","Termes");
-        lectureMatrice();
+        Indexation i = new Indexation("D:\\University\\sample","matriceAdjacence","docsQuoi","Termz");
+        lectureMatrice("matriceAdjacence");
         lecteurRequete();
         lecteurDictionnaire("termes",'T');
         lecteurDictionnaire("documents",'D');
         calcDocPlusPertienent(N);
     }
 
-    void lectureMatrice() throws IOException {
+    void lectureMatrice(String matrixName) throws IOException {
         //---------------------------Lecture du nombre de colonnes et de lignes ---------------------
         // initialisé un buffer reader qui va faire office de lecteur de ligne
-        br = new BufferedReader(new FileReader("./src/main/resources/matriceIndex.txt"));
+        br = new BufferedReader(new FileReader("./src/main/resources/"+matrixName+".txt"));
         // lire la première ligne et la save dans une string
         String NumSousFormeDeString = br.readLine();
         // si c'est pas la fin du fichier ( il est vide )
@@ -47,12 +47,9 @@ public class Recherche {
         // si il y a vraiment une matrice dans le fichier sinon on fait rien
         if(nbTerm>0 && nbDoc>0) {
             M = new MatriceIndexNaive(nbDoc, nbTerm);// initialisation d'une matrice de 0
-            br = new BufferedReader(new FileReader("./src/main/resources/matriceIndex.txt"));
             int i = 0 ; // pour parcourir les lignes
             int j = 0 ; // pour parcourir les colonnes
             // on ignore les 2 première lignes car elle contiennent nbrDoc et nbTerms respectivement
-            contentLine = br.readLine();
-            contentLine = br.readLine();
             contentLine = br.readLine();
             // on lit la première case de la matrice [0,0]
             while (i!=nbDoc) {
@@ -68,7 +65,6 @@ public class Recherche {
     }
 
     public void lecteurRequete() throws IOException {
-        //String requeteLus = lireFichier("./src/main/resources/requete.txt");
         File f = new File("./src/main/resources");
         String motLus="";
         int lus= 0;
@@ -108,7 +104,7 @@ public class Recherche {
     public void lecteurDictionnaire(String path,char c) throws IOException{
 
         int i = 0; // Compteur
-        br = new BufferedReader(new FileReader("./src/main/resources/"+path));
+        br = new BufferedReader(new FileReader("./src/main/resources/"+path+".txt"));
         contentLine = br.readLine(); // Première ligne
         nbTerm = Integer.parseInt(contentLine); // Lecture de la première ligne pour récupérer le nombre de termes.
         nbDoc = Integer.parseInt(contentLine);

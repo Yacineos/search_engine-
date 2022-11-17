@@ -77,3 +77,75 @@ Réalisation :
 ## Objectif de la semaine prochaine :
 
 * Encore mieux se familiariser avec git, et réfléchir à deux fois avant de push un ficher dans le projet.
+
+
+-----------------------------------------------------------------------------------
+## semaine du 02/11
+## **Objectif de la semaine**:
+
+Finaliser les classes Recherche, MatriceIndexNaive, LecteurDocumentNaif et Indexation.
+
+## **Organisation :**
+
+Réflexion :
+
+* Discussion sur la compréhension du sujet et des classes et méthodes à créer.
+* Nous avons relu le cours pour comprendre les notions d’Indexation et Recherche.
+
+Répartition des tâches :
+
+* Sara & Andy : Création de la classe MatriceIndexNaive
+* Angeline & Basma : Création des classes LecteurDocumentNaif et Indexation.
+* Yacine & Messipsa : Création de la classe Recherche.
+
+Réalisation :
+
+* Chaque binôme a réalisé de son côté la classe qui lui était associé.
+* Sara et Andy avait fini leur classe et donc ce sont séparées pour aller aider les deux autres binômes sur la réalisation des classes restantes.
+* Chaque binôme a créé sa classe Main pour tester les méthodes. Certaines semblaient fonctionner, d’autre non, mais on a pu les corriger.
+* Le jour de TP, nous avons eu un gros problème au niveau de la lecture du fichier car le fichier ne situait pas au même endroit chez tout le monde(problème de répertoire). Cela nous a pris beaucoup de temps pour essayer de trouver une solution.
+* Pendant ce temps Andy a créé la méthode lecteurDictionnaire(). Messipsa quant à lui, a dessiné et réfléchit à la création de la méthode calculDocPlusPertinent().
+* Le lendemain, Yacine, Basma et Angeline après mainte recherche ont trouvé la solution à ce problème.
+
+## **Récapitulatif :**
+
+* Les méthodes les plus importantes semblent enfin réalisé. Il reste maintenant plus qu’à finaliser la classe de Recherche.
+
+## **Objectif de la semaine prochaine :**
+
+* Organiser un meeting pour faire un récapitulatif des méthodes manquantes.
+* Finalisation du TP.
+
+
+---------------------------------------------------------------------------------------------
+## semaine du 17/11
+## **Objectif de la semaine**:
+
+Finaliser les classes Recherche , Indexation et avoir une première version qui marche , lire et comprendre d’autres méthodes qui peuvent améliorer le résulatat obtenu
+
+## **Organisation :**
+
+Réflexion :
+
+* Discussion sur l’implémentation de la classe indexation et Recherche et comment utiliser les différentes méthodes .
+
+Répartition des tâches :
+
+* Sara & Basma & Angeline : Réalisation de la class Indexation .
+* Yacine & Messipsa & Andy : Réalisation de la class Recherche.
+
+Réalisation :
+
+* Chaque trinôme a réalisé de son côté la classe qui lui était associé.
+* Pour réaliser la classe Indexation, nous avions d’abord besoin de réaliser la classe LecteurDocumentNaif (fait par Angeline et Basma) et la classe MatrixIndexNaive (fait par Sara et Andy).  Puis nous avions décidé de faire un constructeur pour la classe Indexation qui devra créer les dictionnaires et les sauver. Ainsi Basma s’est chargé de faire les méthodes qui crée et remplit les dictionnaires, Sara s’est chargé de faire les méthodes qui sauvent les documents et Angeline s’est chargé de faire les tests.
+* Yacine a crée la méthode de lecture de la requête quant à Messipsa il a pensé à un algorithme pour le calcul de pertinence , avec l’aide de Yacine et Andy a réussi à le mettre en oeuvre .
+* on a refait une réunion pour discuter de l’état d’avancement du projet et des difficultés et/ou des bugs rencontré lors de la réalisation .
+
+## **Récapitulatif :**
+
+* On a abouti à une première version du projet qui marche mais pour augementer sa fiabilité on essayera de faire des tests unitaire .
+
+## **Objectif de la semaine prochaine :**
+
+* Utiliser a méthode Scrum agile , faire des meetings chaque 1 ou 2 jours de 15min , et faire un grand récapitulatif le jeudi.
+* découvrir les possibilités d’optimisation du moteur recherche afin d’avoir des résultats plus affinés.

@@ -28,7 +28,7 @@ public class MatriceIndexNaive implements MatriceIndex{
         int i = 0 ;
         // TODO Auto-generated method stub
 
-        System.out.print(System.getProperty("user.dir"));
+        System.out.println(System.getProperty("user.dir"));
         File file = new File("./src/main/resources/"+nomDeFichier+".txt");
         try(BufferedWriter fw = new BufferedWriter(new FileWriter(file))) {
             

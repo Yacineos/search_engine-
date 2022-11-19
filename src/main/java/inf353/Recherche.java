@@ -28,7 +28,7 @@ public class Recherche {
         calcDocPlusPertienent(N);
     }
 
-    void lectureMatrice(String matrixName) throws IOException {
+    public void lectureMatrice(String matrixName) throws IOException {
         //---------------------------Lecture du nombre de colonnes et de lignes ---------------------
         // initialisé un buffer reader qui va faire office de lecteur de ligne
         br = new BufferedReader(new FileReader("./src/main/resources/"+matrixName+".txt"));
@@ -176,13 +176,24 @@ public class Recherche {
             }
             // n contient l'indice du Doc car le tableau des pert est : pertD1 , pertD2 ,....
             n = indiceMot(max);
-            System.out.println(lecteurDicoDocs.motIndice(n));
-            tabPertinence[n]=-1;
+            if (tabPertinence[n]==0  && j==0){
+                System.out.println(" DESOLE NOUS NE POUVONS PAS VOUS AIDER VOTRE REQUETE N'APPARAIT DANS AUCUN DE NOS DOCUMENTS ") ;
+
+            } else  {
+                while (tabPertinence[n]>0 ){
+                    System.out.println(lecteurDicoDocs.motIndice(n));
+                    tabPertinence[n]=-1;
+                }
+
+            }
             j++;
+
+
+
         }
 
     }
-    public int indiceMot(float x ){
+    public int indiceMot(float x){
         int i = 0 ;
         while(i!=tabPertinence.length && x!=tabPertinence[i]){
             i++;

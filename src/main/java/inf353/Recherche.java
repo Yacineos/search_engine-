@@ -19,8 +19,8 @@ public class Recherche {
     public static char[] charAccepte = new char[16];
 
 
-    public Recherche(int N) throws IOException {
-        Indexation i = new Indexation("D:\\University\\sample","matriceAdjacence","docsQuoi","Termz");
+    public Recherche(String path ,int N) throws IOException {
+        Indexation i = new Indexation(path,System.getProperty("user.dir") + "/src/main/resources","matriceAdjacence","docsQuoi","Termz");
         lectureMatrice("matriceAdjacence");
         lecteurRequete();
         lecteurDictionnaire("termes",'T');
@@ -31,7 +31,7 @@ public class Recherche {
     public void lectureMatrice(String matrixName) throws IOException {
         //---------------------------Lecture du nombre de colonnes et de lignes ---------------------
         // initialisé un buffer reader qui va faire office de lecteur de ligne
-        br = new BufferedReader(new FileReader("./src/main/resources/"+matrixName+".txt"));
+        br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/src/main/resources"+matrixName+".txt"));
         // lire la première ligne et la save dans une string
         String NumSousFormeDeString = br.readLine();
         // si c'est pas la fin du fichier ( il est vide )
@@ -65,7 +65,7 @@ public class Recherche {
     }
 
     public void lecteurRequete() throws IOException {
-        File f = new File("./src/main/resources");
+        File f = new File(System.getProperty("user.dir") + "/src/main/resources");
         String motLus="";
         int lus= 0;
         br = new BufferedReader(new FileReader(f+"/requete.txt"));
@@ -104,7 +104,7 @@ public class Recherche {
     public void lecteurDictionnaire(String path,char c) throws IOException{
 
         int i = 0; // Compteur
-        br = new BufferedReader(new FileReader("./src/main/resources/"+path+".txt"));
+        br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/src/main/resources"+path+".txt"));
         contentLine = br.readLine(); // Première ligne
         nbTerm = Integer.parseInt(contentLine); // Lecture de la première ligne pour récupérer le nombre de termes.
         nbDoc = Integer.parseInt(contentLine);

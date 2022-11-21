@@ -5,6 +5,6 @@ import java.io.IOException;
 
 public class MainRecherche {
     public static void main(String[] args) throws IOException {
-        Recherche r = new Recherche(4);
+        Recherche r = new Recherche(args[0],4);
     }
 }

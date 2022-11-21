@@ -15,27 +15,99 @@ public class Indexation{
     public int nbDocTotal;
     public DictionnaireNaif dicDpath;
 
-    public Indexation(){
+    public String pathParcours;
+    public String pathSauvegarde;
+
+    /* Constructeur de la classe qui prend en paramètre le chemin du dossier à parcourir et le chemin du dossier de sauvegarde.
+     * Les noms des fichiers txt de sauvegarde seront par défaut "matriceIndex", "documents" et "termes".
+     */
+    public Indexation(String pathParcours, String pathSauvegarde) throws java.io.IOException{
+        this.pathParcours = pathParcours;
+        this.pathSauvegarde = pathSauvegarde;
+
+        File dossier = new File(pathParcours);
+        File disque = new File(pathSauvegarde);
+
+        if((dossier.exists() && dossier.isDirectory())  && (disque.exists() && disque.isDirectory())){
+            dicDpath = new DictionnaireNaif(nbDocsTotal(dossier));
+            remplirDicDpath(dossier);
+
+            //création des trois dictionnaires
+            dicD = new DictionnaireNaif(nbDocsTotal(dossier));
+            remplirDicD(dossier);
+            dicT = new DictionnaireNaif(nbMotsTotal());
+            remplirDicT();
+            m = new MatriceIndexNaive(dicD.nbMots(),dicT.nbMots());
+            remplirMatrice();
+
+            //sauve les trois fichier dans le disque
+            sauverMatrice("matriceIndex");
+            sauverDocs("documents");
+            sauverTermes("termes");
+
+        }else{
+            if(!dossier.exists()){
+                System.out.println("Indexation: Le dossier à parcourir est introuvable.");
+            }else{
+                if(!dossier.isDirectory()){
+                    System.out.println("Indexation: Le dossier à parcourir n'est pas un dossier.");
+                }
+            }
+            if(!disque.exists()){
+                System.out.println("Indexation: Le dossier de sauvegarde est introuvable.");
+            }else{
+                if(!disque.isDirectory()){
+                    System.out.println("Indexation: Le dossier de sauvegarde n'est pas un dossier.");
+                }
+            }
+        }
 
     }
-    public Indexation(String path, String nomDeMatrice, String nomDeDocs, String nomDeTermes) throws java.io.IOException {
-        File dossier = new File(path);
 
-        dicDpath = new DictionnaireNaif(nbDocsTotal(dossier));
-        remplirDicDpath(dossier);
-        dicD = new DictionnaireNaif(nbDocsTotal(dossier));
-        remplirDicD(dossier);
+    /* Constructeur de la classe qui prend en paramètre le chemin du dossier à parcourir, le chemin du dossier de sauvegarde,
+     * le nom du fichier de sauvegarde de la matrice, le nom du fichier de sauvegarde du dictionnaire de documents et
+     * le nom du fichier de sauvegarde du dictionnaire de termes.
+     */
+    public Indexation(String pathParcours, String pathSauvegarde, String nomDeMatrice, String nomDeDocs, String nomDeTermes) throws java.io.IOException{
+        this.pathParcours = pathParcours;
+        this.pathSauvegarde = pathSauvegarde;
 
-        dicT = new DictionnaireNaif(nbMotsTotal());
-        remplirDicT();
+        File dossier = new File(pathParcours);
+        File disque = new File(pathSauvegarde);
 
-        m = new MatriceIndexNaive(dicD.nbMots(),dicT.nbMots());
-        remplirMatrice();
+        if((dossier.exists() && dossier.isDirectory())  && (disque.exists() && disque.isDirectory())){
+            dicDpath = new DictionnaireNaif(nbDocsTotal(dossier));
+            remplirDicDpath(dossier);
 
-        //sauve les trois fichier dans le disque;
-        sauverDocs(nomDeDocs);
-        sauverTermes(nomDeTermes);
-        m.sauver(nomDeMatrice);
+            //création des trois dictionnaires
+            dicD = new DictionnaireNaif(nbDocsTotal(dossier));
+            remplirDicD(dossier);
+            dicT = new DictionnaireNaif(nbMotsTotal());
+            remplirDicT();
+            m = new MatriceIndexNaive(dicD.nbMots(),dicT.nbMots());
+            remplirMatrice();
+
+            //sauve les trois fichier dans le disque
+            sauverMatrice(nomDeMatrice);
+            sauverDocs(nomDeDocs);
+            sauverTermes(nomDeTermes);
+
+        }else{
+            if(!dossier.exists()){
+                System.out.println("Indexation: Le dossier à parcourir est introuvable.");
+            }else{
+                if(!dossier.isDirectory()){
+                    System.out.println("Indexation: Le dossier à parcourir n'est pas un dossier.");
+                }
+            }
+            if(!disque.exists()){
+                System.out.println("Indexation: Le dossier de sauvegarde est introuvable.");
+            }else{
+                if(!disque.isDirectory()){
+                    System.out.println("Indexation: Le dossier de sauvegarde n'est pas un dossier.");
+                }
+            }
+        }
     }
 
     /*
@@ -104,53 +176,70 @@ public class Indexation{
     
     /*
      * sauvegarde du dictionnaire des documents dans le fichier "nomDeFicher.txt"
-     * la 1ère ligne contient le nombre de documents
-     * puis chaque ligne contient un nom de document 
+     * la 1ère ligne contient le nombre de documents puis chaque ligne contient un nom de document 
      */
     public void sauverDocs(String nomDeFichier) throws java.io.IOException, FileNotFoundException{
-        //crée le fichier de nom "nomFichier.txt", s'il n'existe pas, où l'on va sauver le dictionnaire des documents
-        File sauver = new File("./src/main/resources/" + nomDeFichier + ".txt");
+        //crée le fichier de nom "nomFichier.txt", où l'on va sauver le dictionnaire des documents
+        File sauver = new File(pathSauvegarde + "/" + nomDeFichier + ".txt");
+        sauver.createNewFile();
+        BufferedWriter bw = new BufferedWriter(new FileWriter(sauver.getAbsoluteFile()));
+        bw.write(""+dicD.nbMots());
+
         int d =0;
-            sauver.createNewFile();
-            FileWriter fw = new FileWriter(sauver.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(""+dicD.nbMots());
-            while(d != dicD.nbMots()){
-                bw.newLine();
-                bw.write(dicD.motIndice(d));
-                d++;
-            }
-            bw.close();
-        //}else{ 
-            //System.out.println("ce nom de fichier existe déjà");
-        //}
+        while(d != dicD.nbMots()){
+            bw.newLine();
+            bw.write(dicD.motIndice(d));
+            d++;
+        }
+        bw.close();
     }
 
     /*
      * sauvegarde du dictionnaire des termes dans le fichier "nomDeFicher.txt"
-     * la 1ère ligne contient le nombre de termes
-     * puis chaque ligne contient un terme
+     * la 1ère ligne contient le nombre de termes puis chaque ligne contient un terme
      */
     public void sauverTermes(String nomDeFichier) throws java.io.IOException, FileNotFoundException{
-        //crée le fichier de nom "nomFichier.txt", s'il n'existe pas, où l'on va sauver le dictionnaire des termes
-        File sauver = new File("./src/main/resources/" + nomDeFichier + ".txt");
-        if (sauver.exists()) {
-            sauver.delete();
+        //crée le fichier de nom "nomFichier.txt", où l'on va sauver le dictionnaire des termes
+        File sauver = new File(pathSauvegarde + "/" + nomDeFichier + ".txt");
+        sauver.createNewFile();
+        BufferedWriter bw = new BufferedWriter(new FileWriter(sauver.getAbsoluteFile()));
+        bw.write(""+dicT.nbMots());
+
+        int t =0;
+        while(t != dicT.nbMots()){
+            bw.newLine();
+            bw.write(dicT.motIndice(t));
+            t++;
         }
-            int t =0;
-            sauver.createNewFile();
-            FileWriter fw = new FileWriter(sauver.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(""+dicT.nbMots());
-            while(t != dicT.nbMots()){
-                bw.newLine();
-                bw.write(dicT.motIndice(t));
-                t++;
+        bw.close();
+    }
+
+    /*
+     * sauvegarde de la matrice index dans le fichier "nomDeFicher.txt"
+     * la 1ère ligne contient le nombre de documents, la 2ème ligne contient le nombre de termes
+     * puis chaque ligne contient une valeur d'ocurrence d'un terme j dans un document i
+     */
+    public void sauverMatrice(String nomDeFichier) throws java.io.IOException, FileNotFoundException {
+        File file = new File(pathSauvegarde + "/" + nomDeFichier + ".txt");
+        file.createNewFile();
+        BufferedWriter fw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()));
+            
+        fw.write(""+m.ndoc);
+        fw.newLine();
+        fw.write(""+ m.nterm);
+        fw.newLine();
+
+        int i = 0 ;
+        while(i != m.ndoc){
+            int j = 0;
+            while(j != m.nterm){
+                fw.write(""+m.val(i,j));
+                fw.newLine();  
+                j++;
             }
-            bw.close();
-        //}else{ 
-            //System.out.println("ce nom de fichier existe déjà");
-        //}
+            i++;
+        }
+        fw.close();
     }
 
 
@@ -187,5 +276,16 @@ public class Indexation{
             i++;
        }
        return nb;
+    }
+
+    /* Main de la classe, qui prend soit deux paramètres: le chemin du dossier à parcourir et le chemin du dossier de sauvegarde
+     * soit cinqs paramètres: les deux chemins + les noms des fichiers. (dans cette ordre: matrice index, dictionnaire documents, dictionnaire termes)
+     */
+    public static void main(String[] args) throws java.io.IOException{
+        if(args.length == 2 ){
+            new Indexation(args[0], args[1]);
+        }else{
+            new Indexation(args[0], args[1], args[2], args[3], args[4]);
+        }
     }
 }
